@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f5f2">
+  <title>SUDOKAN | Sushi em casa</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">SUDOKAN</div>
+    <div class="mode-toggle" id="mode-toggle" role="tablist" aria-label="Tipo de pedido">
+      <button type="button" data-mode="delivery" class="active" role="tab" aria-selected="true">Entrega</button>
+      <button type="button" data-mode="takeaway" role="tab" aria-selected="false">Takeaway</button>
+    </div>
+  </header>
+
+  <nav class="categories" id="categories" aria-label="Categorias"></nav>
+
+  <main>
+    <!-- Menu -->
+    <section id="view-menu">
+      <div id="menu" class="menu-grid"></div>
+    </section>
+
+    <!-- Checkout -->
+    <section id="view-checkout" class="hidden">
+      <button type="button" class="back-btn" data-back>← Voltar ao menu</button>
+      <h2>Finalizar pedido</h2>
+
+      <div id="cart-list"></div>
+      <div id="summary" class="summary"></div>
+
+      <form id="checkout-form" novalidate>
+        <div class="form-block">
+          <h3>Contacto</h3>
+          <label class="field">Nome
+            <input type="text" name="name" autocomplete="name" required>
+            <small class="error" data-for="name"></small>
+          </label>
+          <label class="field">Telemóvel
+            <input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="912 345 678" required>
+            <small class="error" data-for="phone"></small>
+          </label>
+          <label class="field">Email (opcional)
+            <input type="email" name="email" autocomplete="email">
+            <small class="error" data-for="email"></small>
+          </label>
+        </div>
+
+        <div class="form-block" id="address-block">
+          <h3>Morada de entrega</h3>
+          <label class="field">Rua
+            <input type="text" name="street" autocomplete="address-line1">
+            <small class="error" data-for="street"></small>
+          </label>
+          <div class="grid2">
+            <label class="field">Número
+              <input type="text" name="number" inputmode="numeric">
+              <small class="error" data-for="number"></small>
+            </label>
+            <label class="field">Andar / Porta
+              <input type="text" name="floor">
+            </label>
+          </div>
+          <div class="grid2">
+            <label class="field">Código postal
+              <input type="text" name="postal" placeholder="1000-001" inputmode="numeric">
+              <small class="error" data-for="postal"></small>
+            </label>
+            <label class="field">Localidade
+              <input type="text" name="city" autocomplete="address-level2">
+              <small class="error" data-for="city"></small>
+            </label>
+          </div>
+          <label class="field">Indicações para o estafeta
+            <textarea name="deliveryNotes" rows="2" maxlength="140"></textarea>
+          </label>
+        </div>
+
+        <div class="form-block">
+          <h3>Pagamento</h3>
+          <label class="pay"><input type="radio" name="payment" value="MB Way"> MB Way</label>
+          <label class="pay"><input type="radio" name="payment" value="Cartão"> Cartão (na entrega ou no balcão)</label>
+          <label class="pay"><input type="radio" name="payment" value="Dinheiro"> Dinheiro</label>
+          <small class="error" data-for="payment"></small>
+        </div>
+
+        <div id="form-warning" class="warn hidden" role="alert"></div>
+        <button type="submit" class="primary" id="submit-btn">Confirmar pedido</button>
+      </form>
+    </section>
+
+    <!-- Confirmação e estado -->
+    <section id="view-confirm" class="hidden">
+      <h2 id="confirm-title">Pedido recebido</h2>
+      <p class="muted" id="confirm-sub"></p>
+      <ol class="tracker" id="tracker">
+        <li data-step="0">Pedido recebido</li>
+        <li data-step="1">Em preparação</li>
+        <li data-step="2" id="last-step">A caminho</li>
+      </ol>
+      <div id="confirm-summary" class="summary"></div>
+      <a id="wa-btn" class="wa" href="#" target="_blank" rel="noopener">Enviar resumo pelo WhatsApp</a>
+      <button type="button" class="ghost" id="new-order">Novo pedido</button>
+    </section>
+  </main>
+
+  <!-- Floating Action Button do carrinho -->
+  <button type="button" class="cart-fab hidden" id="cart-fab">
+    <span id="cart-count">0 itens</span>
+    <strong id="cart-total">0,00 €</strong>
+    <span class="cta">Ver carrinho →</span>
+  </button>
+
+  <!-- Modal do produto -->
+  <div class="modal hidden" id="product-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="sheet">
+      <button type="button" class="close" id="close-modal" aria-label="Fechar">×</button>
+      <div id="modal-body"></div>
+      <div class="modal-foot">
+        <div class="qty">
+          <button type="button" id="minus" aria-label="Diminuir">−</button>
+          <span id="qty">1</span>
+          <button type="button" id="plus" aria-label="Aumentar">+</button>
+        </div>
+        <button type="button" id="add-btn">Adicionar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/menu.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
